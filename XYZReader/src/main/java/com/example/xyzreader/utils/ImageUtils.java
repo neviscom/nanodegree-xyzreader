@@ -12,6 +12,9 @@ import com.squareup.picasso.Picasso;
 
 public final class ImageUtils {
 
+    private ImageUtils() {
+    }
+
     public static void loadImage(@NonNull Context context,
                                  @NonNull ImageView imageView, @NonNull String url) {
         Picasso.with(context)

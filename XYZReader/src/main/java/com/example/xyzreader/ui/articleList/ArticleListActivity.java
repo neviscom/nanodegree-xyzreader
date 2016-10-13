@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.example.xyzreader.ui.articleList;
 
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
@@ -16,12 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
+import com.example.xyzreader.ui.articleDetail.ArticleDetailActivity;
 import com.example.xyzreader.utils.ImageUtils;
 
 /**
@@ -111,10 +111,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         mRecyclerView.setAdapter(null);
     }
 
-    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
+    private class Adapter extends RecyclerView.Adapter<CardViewHolder> {
         private Cursor mCursor;
 
-        public Adapter(Cursor cursor) {
+        Adapter(Cursor cursor) {
             mCursor = cursor;
         }
 
@@ -125,9 +125,9 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = getLayoutInflater().inflate(R.layout.list_item_article, parent, false);
-            final ViewHolder vh = new ViewHolder(view);
+            final CardViewHolder vh = new CardViewHolder(view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -139,7 +139,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(CardViewHolder holder, int position) {
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
             holder.subtitleView.setText(
@@ -161,16 +161,4 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public DynamicHeightImageView thumbnailView;
-        public TextView titleView;
-        public TextView subtitleView;
-
-        public ViewHolder(View view) {
-            super(view);
-            thumbnailView = (DynamicHeightImageView) view.findViewById(R.id.thumbnail);
-            titleView = (TextView) view.findViewById(R.id.article_title);
-            subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
-        }
-    }
 }

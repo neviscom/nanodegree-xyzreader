@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.example.xyzreader.ui.articleDetail;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -11,7 +11,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
-import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -23,6 +22,10 @@ import android.widget.TextView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.example.xyzreader.ui.DrawInsetsFrameLayout;
+import com.example.xyzreader.ui.ObservableScrollView;
+import com.example.xyzreader.ui.articleList.ArticleListActivity;
+import com.example.xyzreader.utils.HtmlUtils;
 import com.example.xyzreader.utils.ImageUtils;
 
 /**
@@ -185,7 +188,7 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
             titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            bylineView.setText(Html.fromHtml(
+            bylineView.setText(HtmlUtils.fromHtml(
                     DateUtils.getRelativeTimeSpanString(
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
                             System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
@@ -193,7 +196,7 @@ public class ArticleDetailFragment extends Fragment implements
                             + " by <font color='#ffffff'>"
                             + mCursor.getString(ArticleLoader.Query.AUTHOR)
                             + "</font>"));
-            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
+            bodyView.setText(HtmlUtils.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
 
             ImageUtils.loadImage(getActivity(), mPhotoView, mCursor.getString(ArticleLoader.Query.PHOTO_URL));
         } else {
