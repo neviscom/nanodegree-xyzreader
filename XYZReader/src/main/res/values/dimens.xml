@@ -8,4 +8,12 @@
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
 
+    <dimen name="card_margin">4dp</dimen>
+
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+
+
+
 </resources>
