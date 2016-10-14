@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
 
 import com.example.xyzreader.data.ArticleLoader;
 
@@ -25,12 +24,6 @@ class ArticlePagerAdapter extends FragmentStatePagerAdapter {
     void setCursor(@Nullable Cursor cursor) {
         mCursor = cursor;
         notifyDataSetChanged();
-    }
-
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        super.setPrimaryItem(container, position, object);
-        ArticleDetailFragment fragment = (ArticleDetailFragment) object;
     }
 
     @Override

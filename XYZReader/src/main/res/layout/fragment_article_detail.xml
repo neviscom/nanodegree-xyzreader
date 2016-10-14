@@ -47,7 +47,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:lineSpacingMultiplier="0.9"
                     android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
-                    android:textColor="@color/white_text_color"
+                    android:textColor="@color/primary_white_text_color"
                     android:textSize="@dimen/detail_title_text_size"
                     android:textStyle="bold"
                     tools:text="An Empire State of Mind"/>
@@ -57,7 +57,7 @@
                     style="?android:attr/textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white_text_color"
+                    android:textColor="@color/secondary_white_text_color"
                     tools:text="19 Jul 2013 by Ernest Hemingway"/>
             </LinearLayout>
 
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
             android:padding="@dimen/padding_medium"
-            android:textColor="@color/text_color"
+            android:textColor="@color/primary_text_color_dark"
             android:textColorLink="@color/theme_accent"
             android:textSize="@dimen/detail_body_text_size"/>
 
