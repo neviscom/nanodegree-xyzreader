@@ -10,12 +10,18 @@
 
     <dimen name="card_margin">4dp</dimen>
 
+    <dimen name="padding_xlarge">64dp</dimen>
+    <dimen name="padding_large">32dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
-    <dimen name="padding_normal">8dp</dimen>
     <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_xsmall">4dp</dimen>
 
     <dimen name="app_bar_elevation_default">4dp</dimen>
     <dimen name="app_bar_height">128dp</dimen>
+
+    <dimen name="title_margin_top">200dp</dimen>
+    <dimen name="fab_margin_top">172dp</dimen>
+    <dimen name="back_button_size">56dp</dimen>
 
 
 </resources>

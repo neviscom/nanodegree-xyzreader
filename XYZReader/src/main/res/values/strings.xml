@@ -10,5 +10,6 @@
     <string name="up">Up</string>
 
     <string name="thumbnail_content_description">Thumbnail for the article</string>
+    <string name="detail_image_content_description">An article image</string>
 
 </resources>
