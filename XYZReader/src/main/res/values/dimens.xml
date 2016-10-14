@@ -14,6 +14,8 @@
     <dimen name="padding_normal">8dp</dimen>
     <dimen name="padding_small">4dp</dimen>
 
+    <dimen name="app_bar_elevation_default">4dp</dimen>
+    <dimen name="app_bar_height">128dp</dimen>
 
 
 </resources>
