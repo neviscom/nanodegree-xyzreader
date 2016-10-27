@@ -5,9 +5,16 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -22,6 +29,7 @@ import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.ui.articleList.ArticleListActivity;
 import com.example.xyzreader.utils.HtmlUtils;
 import com.example.xyzreader.utils.ImageUtils;
+import com.squareup.picasso.Callback;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -78,7 +86,7 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
 
@@ -106,12 +114,25 @@ public class ArticleDetailFragment extends Fragment implements
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "NotoSans-Regular.ttf"));
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)
+                mRootView.findViewById(R.id.collapsing_toolbar_layout);
+        collapsingToolbarLayout.setExpandedTitleColor(0x00000000);
+
+        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            String title = mCursor.getString(ArticleLoader.Query.TITLE);
+            titleView.setText(title);
+            collapsingToolbarLayout.setTitle(title);
+
             bylineView.setText(HtmlUtils.fromHtml(
                     DateUtils.getRelativeTimeSpanString(
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
@@ -122,11 +143,31 @@ public class ArticleDetailFragment extends Fragment implements
                             + "</font>"));
             bodyView.setText(HtmlUtils.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
 
-            ImageUtils.loadImage(getActivity(), mPhotoView, mCursor.getString(ArticleLoader.Query.PHOTO_URL));
+            ImageUtils.loadImage(getActivity(), mPhotoView, mCursor.getString(ArticleLoader.Query.PHOTO_URL),
+                    new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Bitmap bitmap = ((BitmapDrawable) mPhotoView.getDrawable()).getBitmap();
+                            if (bitmap != null) {
+                                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+                                        int mutedColor = palette.getDarkMutedColor(0x50333333);
+                                        mRootView.findViewById(R.id.meta_bar).setBackgroundColor(mutedColor);
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onError() {
+                            //do nothing
+                        }
+                    });
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
